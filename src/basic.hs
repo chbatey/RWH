@@ -47,9 +47,7 @@ data List a = Cons a (List a)
             | Nil
             deriving (Show)
 
-data Tree a = Node (Tree a) (Tree a)
-            | Leaf a
-            deriving (Show)
+
 
 shouldLend balance amount = let reserve = 100
                                 newBalance = balance - amount
@@ -85,3 +83,59 @@ lend amount balance
     | otherwise                     = Just amount
     where reserve = 100
           newBalance = balance - reserve - amount
+
+listSize :: Eq t => [t] -> Int
+listSize (_:xs) | xs /= []  = 1 + listSize xs
+listSize (_:[])             = 1
+listSize []                 = 0
+
+
+listMean l = fromIntegral (sumList l) / fromIntegral(listSize l)
+
+reverseList :: [t] -> [t]
+reverseList (x:xs) = (reverseList xs) ++ [x]
+reverseList []     = []
+
+palindrome l = l ++ reverseList l
+
+
+isPal :: Eq t => [t] -> Bool
+isPal l = take half l == reverse(drop half l)
+          where half = round(fromIntegral (length l) / 2)
+
+intersperse :: a -> [[a]] -> [a]
+intersperse _ [] = []
+intersperse _ [xs] = xs
+intersperse a (x : xs)  = x ++ [a] ++ (intersperse a xs)
+
+data Tree a = Node a (Tree a) (Tree a)
+            | Empty
+            deriving (Show)
+
+treeHeight :: Tree a -> Int
+treeHeight Empty = 0
+treeHeight (Node _ left right) = max (1 + treeHeight left) (1 + treeHeight right)
+
+a `plus` b = a + b
+
+safeHead :: [a] -> Maybe a
+safeHead [] = Nothing
+safeHead (x:_) = Just x
+
+safeTail :: [a] -> Maybe [a]
+safeTail [] = Nothing
+safeTail (x:xs) = Just xs
+
+safeLast :: [a] -> Maybe a
+safeLast [] = Nothing
+safeLast a  = Just (last a)
+
+
+safeInit :: [a] -> Maybe [a]
+safeInit [] = Nothing
+safeInit a  = Just (init a)
+
+splitWith :: (a -> Bool) -> [a] -> [[a]]
+splitWith _ [] = [[]]
+--splitWith pred (x,xs) | pred x = []
+splitWith _ (x,xs) =
