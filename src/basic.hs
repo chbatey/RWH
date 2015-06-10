@@ -136,6 +136,11 @@ safeInit [] = Nothing
 safeInit a  = Just (init a)
 
 splitWith :: (a -> Bool) -> [a] -> [[a]]
-splitWith _ [] = [[]]
---splitWith pred (x,xs) | pred x = []
-splitWith _ (x,xs) =
+splitWith _ [] = []
+splitWith pred xs = [takeWhile np xs] ++ splitWith pred restMinusSplit
+                    where np value = not (pred value)
+                          rest = dropWhile np xs
+                          restMinusSplit = dropWhile pred rest
+
+
+
