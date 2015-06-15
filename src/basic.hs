@@ -142,5 +142,11 @@ splitWith pred xs = [takeWhile np xs] ++ splitWith pred restMinusSplit
                           rest = dropWhile np xs
                           restMinusSplit = dropWhile pred rest
 
+myMap :: (a -> b) -> [a] -> [b]
+myMap f (x:xs) = (f x) : myMap f xs
+myMap _ _ = []
 
-
+myFilter :: (a -> Bool) -> [a] -> [a]
+myFilter f (x:xs) | f(x) = x : myFilter f xs
+myFilter f (_:xs) = myFilter f xs
+myFilter _ _ = []
