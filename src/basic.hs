@@ -150,3 +150,8 @@ myFilter :: (a -> Bool) -> [a] -> [a]
 myFilter f (x:xs) | f(x) = x : myFilter f xs
 myFilter f (_:xs) = myFilter f xs
 myFilter _ _ = []
+
+sumIntList :: [Int] -> Int
+sumIntList xs = helper 0 xs
+    where helper acc (x:xs) = helper (acc + x) xs
+          helper acc [] = acc
